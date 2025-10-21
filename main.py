@@ -8,7 +8,7 @@ st.set_page_config(
     layout="centered",
 )
 
-# ✅ Secure way to load API key from Streamlit Secrets
+# Secure way to load API key from Streamlit Secrets
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # Configure Gemini API with secret key
