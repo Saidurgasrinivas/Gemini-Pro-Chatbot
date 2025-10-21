@@ -1,26 +1,19 @@
-import os
-
 import streamlit as st
-from dotenv import load_dotenv
 import google.generativeai as gen_ai
-
-
-# Load environment variables
-load_dotenv()
 
 # Configure Streamlit page settings
 st.set_page_config(
     page_title="Chat with Gemini-Pro!",
-    page_icon=":brain:",  # Favicon emoji
-    layout="centered",  # Page layout option
+    page_icon=":brain:",
+    layout="centered",
 )
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+# ✅ Secure way to load API key from Streamlit Secrets
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
-# Set up Google Gemini-Pro AI model
+# Configure Gemini API with secret key
 gen_ai.configure(api_key=GOOGLE_API_KEY)
 model = gen_ai.GenerativeModel('gemini-2.5-flash')
-
 
 # Function to translate roles between Gemini-Pro and Streamlit terminology
 def translate_role_for_streamlit(user_role):
@@ -29,11 +22,9 @@ def translate_role_for_streamlit(user_role):
     else:
         return user_role
 
-
 # Initialize chat session in Streamlit if not already present
 if "chat_session" not in st.session_state:
     st.session_state.chat_session = model.start_chat(history=[])
-
 
 # Display the chatbot's title on the page
 st.title("🤖 Gemini Pro - ChatBot")
